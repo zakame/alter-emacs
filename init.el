@@ -7,7 +7,6 @@
 
 ;;; Code:
 
-;; load our configuration in README.org
 (with-temp-buffer
   (insert-file-contents
    (expand-file-name "README.org" user-emacs-directory))
