@@ -433,6 +433,16 @@ buffers.
     (load-theme 'sanityinc-tomorrow-eighties t))
 #+END_SRC
 
+** which-key
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :diminish which-key-mode
+    :config
+    (which-key-mode))
+#+END_SRC
+
 * Finis
 
 ** report startup time
