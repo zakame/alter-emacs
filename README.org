@@ -347,14 +347,14 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
 ** projectile
 
 #+BEGIN_SRC emacs-lisp
-   (use-package projectile
-     :diminish projectile-mode
-     :ensure t
-     :config
-     (setq projectile-completion-system 'ivy
-           projectile-create-missing-test-files t
-           projectile-switch-project-action #'projectile-commander)
-       (projectile-global-mode))
+  (use-package projectile
+    :diminish projectile-mode
+    :ensure t
+    :config
+    (setq projectile-completion-system 'ivy
+          projectile-create-missing-test-files t
+          projectile-switch-project-action #'projectile-commander)
+      (projectile-global-mode))
 #+END_SRC
 
 * CPerl
