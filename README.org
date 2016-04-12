@@ -337,9 +337,7 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
     (eval-after-load "magit"
       '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
     (eval-after-load "org"
-      '(add-hook 'org-mode-hook
-                 (lambda ()
-                   (diff-hl-mode)))))
+      '(add-hook 'org-mode-hook (lambda () (diff-hl-update)))))
 #+END_SRC
 
 * Project manglement
