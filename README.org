@@ -401,22 +401,6 @@ buffers.
                 ("C-c <tab> t" . perltidy-dwim-safe)))
 #+END_SRC
 
-** perl-completion
-
-#+BEGIN_SRC emacs-lisp
-  (use-package perl-completion
-    :disabled t
-    :quelpa (perl-completion
-             :fetcher github
-             :repo "wallacewinfrey/perl-completion")
-    :after cperl-mode
-    :diminish perl-completion-mode
-    :init
-    (add-hook 'cperl-mode-hook
-              (lambda ()
-                (perl-completion-mode t))))
-#+END_SRC
-
 * OrgMode
 
 ** org-plus-contrib
