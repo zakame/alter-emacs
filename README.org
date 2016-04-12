@@ -1,4 +1,4 @@
-#+TITLE: Ivy Emacs Config
+#+TITLE: Alter Emacs Config
 #+AUTHOR: Zakame
 #+DATE: 20160411
 
