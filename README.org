@@ -357,6 +357,18 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
       (projectile-global-mode))
 #+END_SRC
 
+* Syntax checking
+
+** flycheck
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :diminish flycheck-mode
+  :ensure t
+  :init
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+#+END_SRC
+
 * CPerl
 
 ** cperl-mode
