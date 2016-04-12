@@ -452,3 +452,13 @@ buffers.
     :config
     (load-theme 'sanityinc-tomorrow-eighties t))
 #+END_SRC
+
+* Finis
+
+** report startup time
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'after-init-hook
+            (lambda ()
+              (message (emacs-init-time))))
+#+END_SRC
