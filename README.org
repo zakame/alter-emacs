@@ -1,0 +1,451 @@
+#+TITLE: Ivy Emacs Config
+#+AUTHOR: Zakame
+#+DATE: 20160411
+
+* Intro
+
+Originally, this is just me playing around with abo-abo's
+swiper/ivy/counsel packages.  Now, its grown a bit to be its own
+configuration to try out other alternatives to some things, not just to
+text selection/narrowing, but to code completion, themes, and others.
+
+** preface
+
+#+BEGIN_SRC emacs-lisp
+  ;; Enable mouse wheel support
+  (if (fboundp 'mwheel-install) (mwheel-install))
+
+  ;; Disable menu, tool, and scroll bars
+  (mapc (lambda (mode)
+          (when (fboundp mode) (funcall mode -1)))
+        '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+
+  (setq load-prefer-newer t)              ; Always load newer elisp
+  (setq enable-local-eval t)              ; Tell Emacs to obey variables
+                                          ; set by the files it reads
+  (setq visible-bell t)                   ; Blink the screen instead of
+                                          ; beeping
+  (set-language-environment "UTF-8")      ; Set my default language
+                                          ; environment
+  (windmove-default-keybindings)          ; Enable windmove
+  (winner-mode 1)                         ; Enable winner-mode
+  (auto-image-file-mode 1)                ; Show images as images, not as
+                                          ; semi-random bits
+  (setq inhibit-startup-message t)        ; No splash screen (well...)
+
+  ;; no fringes too, please!
+  (if (fboundp 'fringe-mode) (fringe-mode 0))
+
+  ;; Use spaces, never tabs, on indentation
+  (setq-default indent-tabs-mode nil)
+#+END_SRC
+
+** package.el
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(nconc package-archives
+       '(("melpa" . "http://melpa.org/packages/")
+         ("org" . "http://orgmode.org/elpa/")))
+(setq package-enable-at-startup nil)
+(package-initialize)
+#+END_SRC
+
+** use-package
+
+#+BEGIN_SRC emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (progn
+      (package-refresh-contents)
+      (package-install 'use-package)))
+  (eval-when-compile
+    (eval-after-load 'advice
+      '(setq ad-redefinition-action 'accept))
+    (require 'use-package))
+  (require 'diminish)
+  (require 'bind-key)
+#+END_SRC
+
+** quelpa
+
+#+BEGIN_SRC emacs-lisp
+  (use-package quelpa-use-package
+    :ensure t
+    :config
+    (setq quelpa-checkout-melpa-p nil))
+#+END_SRC
+
+* Swiper/Ivy, Counsel, and Avy
+
+** swiper
+
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :diminish ivy-mode
+    :ensure t
+    :demand t
+    :bind (("C-s" . swiper)
+           ("C-c C-r" . ivy-resume)
+           ("C-c f" . ivy-recentf))
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t
+          ivy-height 10
+          ivy-count-format "(%d/%d) "
+          ivy-wrap t))
+#+END_SRC
+
+** counsel
+
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel
+    :ensure t
+    :bind (("M-x" . counsel-M-x)
+           ("C-x C-f" . counsel-find-file)
+           ("C-h f" . counsel-describe-function)
+           ("C-h v" . counsel-describe-variable)))
+#+END_SRC
+
+** ivy tweaks
+
+*** recentf
+
+#+BEGIN_SRC emacs-lisp
+  (use-package recentf
+    :config
+    (setq recentf-exclude
+          '("TAGS" ".*-autoloads\\.el\\'" ".*-loaddefs\\.el\\'"))
+    (recentf-mode))
+#+END_SRC
+
+** avy
+
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :ensure t
+    :bind (("M-g w" . avy-goto-word-1)
+           ("M-g g" . avy-goto-line)
+           ("M-g M-g" . avy-goto-line)))
+#+END_SRC
+
+* Completion
+
+** company-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :diminish company-mode
+    :ensure t
+    :config
+    (add-hook 'after-init-hook 'global-company-mode))
+#+END_SRC
+
+* Other editing conveniences
+
+** misc settings
+
+#+BEGIN_SRC emacs-lisp
+  ;; I want backups in their own directory, and even backup while in VC
+  (setq backup-directory-alist
+        `(("." . ,(expand-file-name "backups" user-emacs-directory)))
+        vc-make-backup-files t)
+
+  ;; Disable backups for TRAMP files, though
+  (add-to-list 'backup-directory-alist
+               (cons tramp-file-name-regexp nil))
+
+  ;; Turn on auto-fill on all major modes
+  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+  (setq-default fill-column 72)           ; Set default fill-column
+  (transient-mark-mode 1)                 ; Show highlight when selecting
+                                          ; regions
+  (line-number-mode 1)                    ; Show line number ...
+  (column-number-mode 1)                  ; ... and column number on
+                                          ; modeline
+  (show-paren-mode 1)                     ; Automatically makes the
+                                          ; matching parenthesis stand out
+                                          ; in color
+  (setq show-paren-style 'expression)     ; Make the entire matched expression
+                                          ; stand out
+  (mouse-avoidance-mode 'cat-and-mouse)   ; Move the mouse pointer out
+                                          ; of my way when I type
+  (temp-buffer-resize-mode 1)             ; Temporary windows should not
+                                          ; get into our way
+  (auto-compression-mode 1)               ; Load Auto-(De)Compression Mode
+  (setq next-line-add-newlines nil)         ; This disables down-arrow and
+                                          ; C-n at the end of a buffer
+                                          ; from adding a new line to that
+                                          ; buffer
+
+  (setq search-whitespace-regexp ".*?")   ; match anything (non-greedy)
+
+  (setq auto-save-timeout 15              ; Auto-save after 15 sec of
+                                          ; idleness
+        require-final-newline t           ; Always add a newline to file's end
+        search-highlight t                ; Highlight search strings
+        compilation-window-height 10      ; Set a small window for
+                                          ; compiles
+        compilation-scroll-output
+        'first-error                      ; Follow compilation scrolling
+                                          ; until the first error
+        compilation-ask-about-save nil)
+#+END_SRC
+
+** auto-fill
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load "simple"
+    '(diminish 'auto-fill-function))
+#+END_SRC
+
+** autorevert
+
+#+BEGIN_SRC emacs-lisp
+  (use-package autorevert
+    :diminish auto-revert-mode
+    :mode (("\\.log\\'" . auto-revert-tail-mode)))
+#+END_SRC
+
+** dired
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'dired-load-hook
+            (lambda ()
+              (load "dired-x")))
+#+END_SRC
+
+** expand-region
+
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t
+    :bind (("C-=" . er/expand-region)))
+#+END_SRC
+
+** saveplace
+
+#+BEGIN_SRC emacs-lisp
+  (use-package saveplace
+    :config
+    (setq-default save-place t
+                  save-place-file (expand-file-name ".places"
+                                                    user-emacs-directory)))
+#+END_SRC
+
+** smartparens
+
+#+BEGIN_SRC emacs-lisp
+  (use-package smartparens
+    :diminish smartparens-mode
+    :ensure t
+    :config
+    (use-package smartparens-config)
+    (smartparens-global-mode 1))
+#+END_SRC
+
+** tramp
+
+Enable TRAMP and editing files as root (via sudo) on remote hosts
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load "tramp"
+    '(progn
+       (setq tramp-default-method "ssh")
+       (add-to-list 'tramp-default-proxies-alist
+                    '(nil "\\`root\\'" "/ssh:%h:"))
+       (add-to-list 'tramp-default-proxies-alist
+                    '((regexp-quote (system-name)) nil nil))))
+#+END_SRC
+
+* Git
+
+** magit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :bind (("C-c g" . magit-status)
+           ("M-g b" . magit-blame)
+           :map magit-mode-map
+           ("v" . endless/visit-pull-request-url)
+           :map magit-status-mode-map
+           ("q" . zakame/magit-quit-session))
+    :init
+    (setq magit-last-seen-setup-instructions "2.1.0")
+    (setq magit-push-always-verify nil)
+    :config
+    (defun endless/visit-pull-request-url ()
+      "Visit the current branch's PR on Github."
+      (interactive)
+      (browse-url
+       (format "https://github.com/%s/compare/%s"
+               (replace-regexp-in-string
+                "\\`.+github\\.com:\\(.+\\)\\.git\\'" "\\1"
+                (magit-get "remote"
+                           (magit-get-upstream-remote)
+                           "url"))
+               (magit-get-current-branch))))
+    (defun endless/add-PR-fetch ()
+      "If refs/pull is not defined on a GH repo, define it."
+      (let ((fetch-address
+             "+refs/pull/*/head:refs/pull/origin/*")
+            (magit-remotes
+             (magit-get-all "remote" "origin" "fetch")))
+        (unless (or (not magit-remotes)
+                    (member fetch-address magit-remotes))
+          (when (string-match
+                 "github" (magit-get "remote" "origin" "url"))
+            (magit-git-string
+             "config" "--add" "remote.origin.fetch"
+             fetch-address)))))
+    (add-hook 'magit-mode-hook #'endless/add-PR-fetch)
+    (defadvice magit-status (around magit-fullscreen activate)
+      (window-configuration-to-register :magit-fullscreen)
+      ad-do-it
+      (delete-other-windows))
+    (defun zakame/magit-quit-session ()
+      "Restores the previous window configuration and kills the magit buffer."
+      (interactive)
+      (kill-buffer)
+      (jump-to-register :magit-fullscreen)))
+#+END_SRC
+
+** git-timemachine
+
+#+BEGIN_SRC emacs-lisp
+  ;; git-timemachine
+  (use-package git-timemachine
+    :bind (("M-g t" . git-timemachine))
+    :ensure t)
+#+END_SRC
+
+** diff-hl
+
+#+BEGIN_SRC emacs-lisp
+  (use-package diff-hl
+    :ensure t
+    :config
+    (global-diff-hl-mode)
+    (setq diff-hl-side 'left)
+    (diff-hl-margin-mode)
+    (unless (version<= emacs-version "24.4")
+      (diff-hl-flydiff-mode))
+    (eval-after-load "magit"
+      '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+    (eval-after-load "org"
+      '(add-hook 'org-mode-hook
+                 (lambda ()
+                   (diff-hl-mode)))))
+#+END_SRC
+
+* Project manglement
+
+** projectile
+
+#+BEGIN_SRC emacs-lisp
+   (use-package projectile
+     :diminish projectile-mode
+     :ensure t
+     :config
+     (setq projectile-completion-system 'ivy
+           projectile-create-missing-test-files t
+           projectile-switch-project-action #'projectile-commander)
+       (projectile-global-mode))
+#+END_SRC
+
+* CPerl
+
+** cperl-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cperl-mode
+    :mode "\\.\\([pP]\\([Llm]\\|erl\\|od\\|sgi\\)\\|al\\|t\\)\\'"
+    :preface
+    (defalias 'perl-mode 'cperl-mode)
+    :init
+    (add-hook 'cperl-mode-hook
+              (lambda ()
+                (company-mode -1)))
+    :config
+    (cperl-lazy-install)
+    (setq cperl-invalid-face nil
+          cperl-indent-level 4
+          cperl-indent-parens-as-block t
+          cperl-close-paren-offset -4
+          cperl-continued-statement-offset 4
+          cperl-tab-always-indent t
+          cperl-lazy-help-time 2))
+#+END_SRC
+
+** perltidy
+
+=tramp-tramp-file-p= is autoloaded here as perltidy tests for TRAMP
+buffers.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package perltidy
+    :quelpa (perltidy
+             :fetcher url
+             :url "https://www.emacswiki.org/emacs/download/perltidy.el")
+    :after cperl-mode
+    :init
+    (autoload 'tramp-tramp-file-p "tramp")
+    :bind (:map cperl-mode-map
+                ("C-c <tab> r" . perltidy-region)
+                ("C-c <tab> b" . perltidy-buffer)
+                ("C-c <tab> s" . perltidy-subroutine)
+                ("C-c <tab> t" . perltidy-dwim-safe)))
+#+END_SRC
+
+** perl-completion
+
+#+BEGIN_SRC emacs-lisp
+  (use-package perl-completion
+    :disabled t
+    :quelpa (perl-completion
+             :fetcher github
+             :repo "wallacewinfrey/perl-completion")
+    :after cperl-mode
+    :diminish perl-completion-mode
+    :init
+    (add-hook 'cperl-mode-hook
+              (lambda ()
+                (perl-completion-mode t))))
+#+END_SRC
+
+* OrgMode
+
+** org-plus-contrib
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :ensure org-plus-contrib
+    :mode ("\\.\\(org\\|org_archive\\)$" . org-mode)
+    :bind (("\C-cl" . org-store-link)
+           ("\C-cc" . org-capture)
+           ("\C-ca" . org-agenda)
+           ("\C-cb" . org-iswitchb))
+    :init
+    ;; enable org-bullets
+    (add-hook 'org-mode-hook
+              (lambda ()
+                (org-bullets-mode 1)))
+    (setq org-ellipsis " ▼")
+    ;; make windmove work well with org-mode
+    (add-hook 'org-shiftup-final-hook 'windmove-up)
+    (add-hook 'org-shiftleft-final-hook 'windmove-left)
+    (add-hook 'org-shiftdown-final-hook 'windmove-down)
+    (add-hook 'org-shiftright-final-hook 'windmove-right))
+#+END_SRC
+
+* Look and feel
+
+** tomorrow-80's theme
+
+#+BEGIN_SRC emacs-lisp
+  (use-package color-theme-sanityinc-tomorrow
+    :ensure t
+    :config
+    (load-theme 'sanityinc-tomorrow-eighties t))
+#+END_SRC
