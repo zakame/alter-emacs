@@ -366,10 +366,6 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
     :mode "\\.\\([pP]\\([Llm]\\|erl\\|od\\|sgi\\)\\|al\\|t\\)\\'"
     :preface
     (defalias 'perl-mode 'cperl-mode)
-    :init
-    (add-hook 'cperl-mode-hook
-              (lambda ()
-                (company-mode -1)))
     :config
     (cperl-lazy-install)
     (setq cperl-invalid-face nil
