@@ -226,6 +226,26 @@ text selection/narrowing, but to code completion, themes, and others.
     :bind (("C-=" . er/expand-region)))
 #+END_SRC
 
+** hippie-expand
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hippie-exp
+    :config
+    (global-set-key (kbd "M-/") 'hippie-expand)
+    (setq hippie-expand-try-functions-list
+          '(
+            try-expand-dabbrev
+            try-expand-dabbrev-all-buffers
+            try-expand-dabbrev-from-kill
+            try-complete-file-name-partially
+            try-complete-file-name
+            try-expand-all-abbrevs
+            try-expand-list
+            try-expand-line
+            try-complete-lisp-symbol-partially
+            try-complete-lisp-symbol)))
+#+END_SRC
+
 ** saveplace
 
 #+BEGIN_SRC emacs-lisp
