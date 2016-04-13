@@ -256,6 +256,25 @@ text selection/narrowing, but to code completion, themes, and others.
     (global-hungry-delete-mode))
 #+END_SRC
 
+** rainboy-delimiters
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :init
+    (dolist (hook '(prog-mode-hook java-mode-hook cperl-mode-hook))
+      (add-hook hook #'rainbow-delimiters-mode))
+    :config
+    (setq rainbow-delimiters-max-face-count 1)
+    (set-face-attribute 'rainbow-delimiters-depth-1-face nil
+                        :foreground "dim gray")
+    (dolist (face '(rainbow-delimiters-unmatched-face
+                    rainbow-delimiters-mismatched-face))
+      (set-face-attribute face nil
+                          :foreground 'unspecified
+                          :inherit 'error)))
+#+END_SRC
+
 ** saveplace
 
 #+BEGIN_SRC emacs-lisp
