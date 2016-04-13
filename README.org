@@ -111,6 +111,16 @@ text selection/narrowing, but to code completion, themes, and others.
 
 ** ivy tweaks
 
+*** flx fuzzy matching
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flx
+    :ensure t
+    :config
+    (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy))
+          ivy-initial-inputs-alist nil))
+#+END_SRC
+
 *** recentf
 
 #+BEGIN_SRC emacs-lisp
