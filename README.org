@@ -424,6 +424,26 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
   (add-hook 'after-init-hook #'global-flycheck-mode))
 #+END_SRC
 
+* Java (Android)
+
+** android-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package android-mode
+    :ensure t
+    :config
+    (setq android-mode-builder 'gradle
+          android-mode-build-command-alist '((gradle . "gradle"))))
+#+END_SRC
+
+** groovy-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package groovy-mode
+    :ensure t
+    :mode "\\.gradle\\'")
+#+END_SRC
+
 * Perl
 
 ** cperl-mode
