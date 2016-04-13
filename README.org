@@ -246,6 +246,16 @@ text selection/narrowing, but to code completion, themes, and others.
             try-complete-lisp-symbol)))
 #+END_SRC
 
+** hungry-delete
+
+#+BEGIN_SRC emacs-lisp
+  (use-package hungry-delete
+    :diminish hungry-delete-mode
+    :ensure t
+    :config
+    (global-hungry-delete-mode))
+#+END_SRC
+
 ** saveplace
 
 #+BEGIN_SRC emacs-lisp
