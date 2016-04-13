@@ -355,9 +355,7 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
     (unless (version<= emacs-version "24.4")
       (diff-hl-flydiff-mode))
     (eval-after-load "magit"
-      '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
-    (eval-after-load "org"
-      '(add-hook 'org-mode-hook (lambda () (diff-hl-mode)))))
+      '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
 #+END_SRC
 
 * Project manglement
