@@ -291,6 +291,16 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
                     '((regexp-quote (system-name)) nil nil))))
 #+END_SRC
 
+** undo-tree
+
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :diminish undo-tree-mode
+    :ensure t
+    :config
+    (global-undo-tree-mode 1))
+#+END_SRC
+
 * Git
 
 ** magit
