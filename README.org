@@ -195,6 +195,13 @@ text selection/narrowing, but to code completion, themes, and others.
         compilation-ask-about-save nil)
 #+END_SRC
 
+** abbrev
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load "abbrev"
+    '(diminish 'abbrev-mode))
+#+END_SRC
+
 ** auto-fill
 
 #+BEGIN_SRC emacs-lisp
