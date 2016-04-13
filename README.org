@@ -64,6 +64,7 @@ text selection/narrowing, but to code completion, themes, and others.
     (require 'use-package))
   (require 'diminish)
   (require 'bind-key)
+  (bind-key "C-x c @" 'package-list-packages)
 #+END_SRC
 
 ** quelpa
@@ -86,6 +87,7 @@ text selection/narrowing, but to code completion, themes, and others.
     :demand t
     :bind (("C-s" . swiper)
            ("C-c C-r" . ivy-resume)
+           ("C-x c b" . ivy-resume)
            ("C-c f" . ivy-recentf))
     :config
     (ivy-mode 1)
