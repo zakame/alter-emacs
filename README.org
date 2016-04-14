@@ -175,6 +175,8 @@ text selection/narrowing, but to code completion, themes, and others.
   (setq-default fill-column 72)           ; Set default fill-column
   (transient-mark-mode 1)                 ; Show highlight when selecting
                                           ; regions
+  (which-function-mode)                   ; show current function/sub in
+                                          ; modeline
   (line-number-mode 1)                    ; Show line number ...
   (column-number-mode 1)                  ; ... and column number on
                                           ; modeline
