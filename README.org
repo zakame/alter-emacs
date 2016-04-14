@@ -43,12 +43,12 @@ text selection/narrowing, but to code completion, themes, and others.
 ** package.el
 
 #+BEGIN_SRC emacs-lisp
-(require 'package)
-(nconc package-archives
-       '(("melpa" . "http://melpa.org/packages/")
-         ("org" . "http://orgmode.org/elpa/")))
-(setq package-enable-at-startup nil)
-(package-initialize)
+  (require 'package)
+  (nconc package-archives
+         '(("melpa" . "http://melpa.org/packages/")
+           ("org" . "http://orgmode.org/elpa/")))
+  (setq package-enable-at-startup nil)
+  (package-initialize)
 #+END_SRC
 
 ** use-package
