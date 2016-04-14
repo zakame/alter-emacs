@@ -226,7 +226,10 @@ text selection/narrowing, but to code completion, themes, and others.
 #+BEGIN_SRC emacs-lisp
   (use-package autorevert
     :diminish auto-revert-mode
-    :mode (("\\.log\\'" . auto-revert-tail-mode)))
+    :config
+    (global-auto-revert-mode 1)
+    (setq global-auto-revert-non-file-buffers t
+          auto-revert-verbose nil))
 #+END_SRC
 
 ** dired
