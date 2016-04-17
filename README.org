@@ -461,6 +461,18 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
   (add-hook 'after-init-hook #'global-flycheck-mode))
 #+END_SRC
 
+* Lisp
+
+** eldoc
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (hook
+           '(emacs-lisp-mode-hook lisp-interaction-mode-hook ielm-mode-hook))
+    (add-hook hook #'eldoc-mode))
+  (eval-after-load "eldoc"
+    '(diminish 'eldoc-mode))
+#+END_SRC
+
 * Java (Android)
 
 ** android-mode
