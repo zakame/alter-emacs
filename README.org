@@ -218,6 +218,20 @@ text selection/narrowing, but to code completion, themes, and others.
     '(diminish 'abbrev-mode))
 #+END_SRC
 
+** aggressive-indent
+
+#+BEGIN_SRC emacs-lisp
+  (use-package aggressive-indent
+    :ensure t
+    :diminish aggressive-indent-mode
+    :config
+    (mapc
+     (lambda (mode)
+       (add-to-list 'aggressive-indent-excluded-modes mode))
+     '(cperl-mode html-mode))
+    (global-aggressive-indent-mode 1))
+#+END_SRC
+
 ** auto-fill
 
 #+BEGIN_SRC emacs-lisp
