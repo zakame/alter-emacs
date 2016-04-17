@@ -404,6 +404,22 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
 
 * Project manglement
 
+
+** ggtags
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ggtags
+    :ensure t
+    :diminish ggtags-mode
+    :if (executable-find "gtags")
+    :init
+    (add-hook 'cperl-mode-hook 'ggtags-mode)
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                  (ggtags-mode 1)))))
+#+END_SRC
+
 ** projectile
 
 #+BEGIN_SRC emacs-lisp
