@@ -108,7 +108,9 @@ text selection/narrowing, but to code completion, themes, and others.
            ("C-x C-f" . counsel-find-file)
            ("C-h f" . counsel-describe-function)
            ("C-h v" . counsel-describe-variable)
-           ("C-c i" . counsel-imenu)))
+           ("C-h b" . counsel-descbinds)
+           ("C-c i" . counsel-imenu)
+           ("C-x c i" . counsel-imenu)))
 #+END_SRC
 
 ** ivy tweaks
