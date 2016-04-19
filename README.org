@@ -1,6 +1,7 @@
 #+TITLE: Alter Emacs Config
 #+AUTHOR: Zakame
 #+DATE: 20160411
+#+PROPERTY: header-args:emacs-lisp :results silent
 
 * Intro
 
