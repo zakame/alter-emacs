@@ -482,8 +482,7 @@ Enable TRAMP and editing files as root (via sudo) on remote hosts
   (use-package android-mode
     :ensure t
     :config
-    (setq android-mode-builder 'gradle
-          android-mode-build-command-alist '((gradle . "gradle"))))
+    (setq android-mode-builder 'gradle))
 #+END_SRC
 
 ** groovy-mode
