@@ -159,10 +159,6 @@ text selection/narrowing, but to code completion, themes, and others.
         `(("." . ,(expand-file-name "backups" user-emacs-directory)))
         vc-make-backup-files t)
 
-  ;; Disable backups for TRAMP files, though
-  (add-to-list 'backup-directory-alist
-               (cons tramp-file-name-regexp nil))
-
   ;; Turn on auto-fill on all major modes
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
@@ -321,11 +317,14 @@ text selection/narrowing, but to code completion, themes, and others.
 
 ** tramp
 
-Enable TRAMP and editing files as root (via sudo) on remote hosts
+Enable TRAMP and editing files as root (via sudo) on remote hosts, and
+also do not back up tramp files locally:
 
 #+BEGIN_SRC emacs-lisp
   (eval-after-load "tramp"
     '(progn
+       (add-to-list 'backup-directory-alist
+                    (cons tramp-file-name-regexp nil))
        (setq tramp-default-method "ssh")
        (add-to-list 'tramp-default-proxies-alist
                     '(nil "\\`root\\'" "/ssh:%h:"))
