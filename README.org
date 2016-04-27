@@ -127,16 +127,6 @@ text selection/narrowing, but to code completion, themes, and others.
           ivy-initial-inputs-alist nil))
 #+END_SRC
 
-*** recentf
-
-#+BEGIN_SRC emacs-lisp
-  (use-package recentf
-    :config
-    (setq recentf-exclude
-          '("TAGS" ".*-autoloads\\.el\\'" ".*-loaddefs\\.el\\'"))
-    (recentf-mode))
-#+END_SRC
-
 ** avy
 
 #+BEGIN_SRC emacs-lisp
@@ -296,6 +286,16 @@ text selection/narrowing, but to code completion, themes, and others.
     :ensure t
     :config
     (global-hungry-delete-mode))
+#+END_SRC
+
+** recentf
+
+#+BEGIN_SRC emacs-lisp
+  (use-package recentf
+    :config
+    (setq recentf-exclude
+          '("TAGS" ".*-autoloads\\.el\\'" ".*-loaddefs\\.el\\'"))
+    (recentf-mode))
 #+END_SRC
 
 ** saveplace
