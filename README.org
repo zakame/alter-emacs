@@ -86,8 +86,7 @@ text selection/narrowing, but to code completion, themes, and others.
     :diminish ivy-mode
     :ensure t
     :demand t
-    :bind (("C-s" . swiper)
-           ("C-c C-r" . ivy-resume)
+    :bind (("C-c C-r" . ivy-resume)
            ("C-x c b" . ivy-resume)
            ("C-c f" . ivy-recentf))
     :config
@@ -106,12 +105,14 @@ text selection/narrowing, but to code completion, themes, and others.
     :init
     (setq counsel-find-file-at-point t)
     :bind (("M-x" . counsel-M-x)
+           ("C-s" . counsel-grep-or-swiper)
            ("C-x C-f" . counsel-find-file)
            ("C-h f" . counsel-describe-function)
            ("C-h v" . counsel-describe-variable)
            ("C-h b" . counsel-descbinds)
            ("C-c i" . counsel-imenu)
-           ("C-x c i" . counsel-imenu)))
+           ("C-x c i" . counsel-imenu)
+           ("C-x c p" . counsel-list-processes)))
 #+END_SRC
 
 ** ivy tweaks
