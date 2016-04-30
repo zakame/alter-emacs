@@ -423,7 +423,6 @@ also do not back up tramp files locally:
 
 * Project manglement
 
-
 ** ggtags
 
 #+BEGIN_SRC emacs-lisp
