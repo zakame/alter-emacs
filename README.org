@@ -684,6 +684,14 @@ This allows using =curl= inside Org Babel code blocks, e.g.
 
 * Finis
 
+** Load local customizations
+
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file)
+    (load custom-file))
+#+END_SRC
+
 ** report startup time
 
 #+BEGIN_SRC emacs-lisp
