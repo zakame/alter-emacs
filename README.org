@@ -344,6 +344,14 @@ also do not back up tramp files locally:
     (global-undo-tree-mode 1))
 #+END_SRC
 
+** yaml-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :ensure t
+    :mode "\\.yml$")
+#+END_SRC
+
 * Git
 
 ** magit
