@@ -88,6 +88,8 @@ text selection/narrowing, but to code completion, themes, and others.
     :demand t
     :bind (("C-c C-r" . ivy-resume)
            ("C-x c b" . ivy-resume)
+           ("C-c v" . ivy-push-view)
+           ("C-c V" . ivy-pop-view)
            ("C-c f" . ivy-recentf))
     :config
     (ivy-mode 1)
