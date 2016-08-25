@@ -579,6 +579,17 @@ buffers.
                 ("C-c <tab> t" . perltidy-dwim-safe)))
 #+END_SRC
 
+* PHP
+
+** php-mode
+
+#+BEGIN_SRC emacs-lisp
+  ;; php-mode
+  (use-package php-mode
+    :ensure t
+    :mode "\\.php\\'")
+#+END_SRC
+
 * Shell and Terminal Emulation
 
 ** ansi-term
