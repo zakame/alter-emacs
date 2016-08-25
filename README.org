@@ -89,8 +89,7 @@ text selection/narrowing, but to code completion, themes, and others.
     :bind (("C-c C-r" . ivy-resume)
            ("C-x c b" . ivy-resume)
            ("C-c v" . ivy-push-view)
-           ("C-c V" . ivy-pop-view)
-           ("C-c f" . ivy-recentf))
+           ("C-c V" . ivy-pop-view))
     :config
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t
@@ -112,6 +111,7 @@ text selection/narrowing, but to code completion, themes, and others.
            ("C-h f" . counsel-describe-function)
            ("C-h v" . counsel-describe-variable)
            ("C-h b" . counsel-descbinds)
+           ("C-c f" . counsel-recentf)
            ("C-c i" . counsel-imenu)
            ("C-x c i" . counsel-imenu)
            ("C-x c p" . counsel-list-processes)))
