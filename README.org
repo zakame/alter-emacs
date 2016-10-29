@@ -466,7 +466,8 @@ also do not back up tramp files locally:
   (use-package counsel-projectile
     :ensure t
     :after projectile
-    :bind (("C-c p h". counsel-projectile)))
+    :config
+    (counsel-projectile-on))
 #+END_SRC
 
 * Syntax checking
