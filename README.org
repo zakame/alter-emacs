@@ -85,7 +85,6 @@ text selection/narrowing, but to code completion, themes, and others.
   (use-package swiper
     :diminish ivy-mode
     :ensure t
-    :demand t
     :bind (("C-c C-r" . ivy-resume)
            ("C-x c b" . ivy-resume)
            ("C-c v" . ivy-push-view)
