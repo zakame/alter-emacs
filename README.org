@@ -155,6 +155,15 @@ text selection/narrowing, but to code completion, themes, and others.
     (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
 
+** quick help popups for completions
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company-quickhelp
+    :ensure t
+    :config
+    (company-quickhelp-mode 1))
+#+END_SRC
+
 * Other editing conveniences
 
 ** misc settings
