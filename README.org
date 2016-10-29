@@ -146,7 +146,12 @@ text selection/narrowing, but to code completion, themes, and others.
   (use-package company
     :diminish company-mode
     :ensure t
+    :bind (:map company-active-map
+                ("C-n" . company-select-next)
+                ("C-p" . company-select-previous))
     :config
+    (setq company-tooltip-align-annotations t
+          company-idle-delay 0.3)
     (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
 
