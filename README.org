@@ -15,9 +15,9 @@ Emacs.  To try it out without clobbering your existing =~/.emacs.d=, you
 can do this instead:
 
 #+BEGIN_EXAMPLE sh
-$ mkdir -p /path/to/alt/home && cd /path/to/alt/home
-$ git clone https://github.com/zakame/alter-emacs.git .emacs.d
-$ HOME=/path/to/alt/home emacs
+  $ mkdir -p /path/to/alt/home && cd /path/to/alt/home
+  $ git clone https://github.com/zakame/alter-emacs.git .emacs.d
+  $ HOME=/path/to/alt/home emacs
 #+END_EXAMPLE 
 
 ** preface
