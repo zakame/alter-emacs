@@ -10,6 +10,16 @@ swiper/ivy/counsel packages.  Now, its grown a bit to be its own
 configuration to try out other alternatives to some things, not just to
 text selection/narrowing, but to code completion, themes, and others.
 
+To use this config, just clone this repo into =~/.emacs.d= then run
+Emacs.  To try it out without clobbering your existing =~/.emacs.d=, you
+can do this instead:
+
+#+BEGIN_EXAMPLE sh
+$ mkdir -p /path/to/alt/home && cd /path/to/alt/home
+$ git clone https://github.com/zakame/alter-emacs.git .emacs.d
+$ HOME=/path/to/alt/home emacs
+#+END_EXAMPLE 
+
 ** preface
 
 #+BEGIN_SRC emacs-lisp
