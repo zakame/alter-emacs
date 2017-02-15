@@ -628,6 +628,58 @@ buffers.
                 ("C-c <tab> t" . perltidy-dwim-safe)))
 #+END_SRC
 
+** Pod-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package pod-mode
+    :mode "\\.[pP]od\\'"
+    :quelpa (pod-mode :fetcher github :repo "renormalist/emacs-pod-mode"))
+#+END_SRC
+
+** CPANFile-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package cpanfile-mode
+    :ensure t)
+#+END_SRC
+
+** Perl-Reply
+
+#+BEGIN_SRC emacs-lisp
+  (use-package reply
+    :quelpa (reply :fetcher github :repo "syohex/emacs-reply" )
+    :after cperl-mode
+    :config
+    (defun zakame/reply-sentinel (process event)
+      (if (memq (process-status process) '(signal exit))
+          (let ((buffer (process-buffer process)))
+            (kill-buffer buffer))))
+    (defadvice run-reply (around reply-set-process-sentinel activate)
+      ad-do-it
+      (set-process-sentinel (get-process "reply") 'zakame/reply-sentinel))
+    (ad-activate 'run-reply)
+    (defun zakame/reply-other-window ()
+      "Run `reply' on other window."
+      (interactive)
+      (switch-to-buffer-other-window (get-buffer-create "*reply*"))
+      (run-reply "reply"))
+    :bind (:map cperl-mode-map
+                ("C-c r r" . run-reply)
+                ("C-c r C-r" . reply-send-region)
+                ("C-c r C-z" . zakame/reply-other-window)))
+#+END_SRC
+
+** PlSense
+
+Requires https://github.com/aki2o/plsense
+
+#+BEGIN_SRC emacs-lisp
+  (use-package plsense
+    :ensure t
+    :config
+    (plsense-config-default))
+#+END_SRC
+
 * PHP
 
 ** php-mode
