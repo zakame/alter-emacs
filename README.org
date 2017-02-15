@@ -367,6 +367,21 @@ also do not back up tramp files locally:
     :mode "\\.yml$")
 #+END_SRC
 
+** widescreen
+
+Make window splits much smarter especially when on widescreen displays
+
+#+BEGIN_SRC emacs-lisp
+  (defun zakame/split-window-prefer-side-by-side (window)
+    "Split WINDOW, preferably side by side."
+    (let ((split-height-threshold (and (< (window-width window)
+                                          split-width-threshold)
+                                       split-height-threshold)))
+      (split-window-sensibly window)))
+  (setq split-window-preferred-function
+        #'zakame/split-window-prefer-side-by-side)
+#+END_SRC
+
 * Git
 
 ** magit
