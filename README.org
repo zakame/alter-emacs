@@ -680,6 +680,15 @@ Requires https://github.com/aki2o/plsense
     (plsense-config-default))
 #+END_SRC
 
+PlSense pulls in auto-complete-mode, so customize that:
+
+#+BEGIN_SRC emacs-lisp
+  (eval-after-load "auto-complete"
+    '(progn
+       (diminish 'auto-complete-mode)
+       (setq ac-use-menu-map t)))
+#+END_SRC
+
 * PHP
 
 ** php-mode
