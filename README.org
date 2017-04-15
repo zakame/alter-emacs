@@ -123,6 +123,8 @@ can do this instead:
            ("C-c f" . counsel-recentf)
            ("C-c i" . counsel-imenu)
            ("C-x c i" . counsel-imenu)
+           ("C-x c c" . counsel-colors-emacs)
+           ("C-x c F" . counsel-faces)
            ("C-x c p" . counsel-list-processes)))
 #+END_SRC
 
