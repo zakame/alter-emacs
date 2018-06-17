@@ -73,9 +73,15 @@ can do this instead:
     (eval-after-load 'advice
       '(setq ad-redefinition-action 'accept))
     (require 'use-package))
-  (require 'diminish)
   (require 'bind-key)
   (bind-key "C-x c @" 'package-list-packages)
+#+END_SRC
+
+** diminish
+
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :ensure t)
 #+END_SRC
 
 ** quelpa
