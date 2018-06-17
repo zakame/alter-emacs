@@ -524,7 +524,7 @@ Make window splits much smarter especially when on widescreen displays
     :ensure t
     :after projectile
     :config
-    (counsel-projectile-on))
+    (counsel-projectile-mode))
 #+END_SRC
 
 * Syntax checking
