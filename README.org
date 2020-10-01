@@ -511,6 +511,7 @@ Make window splits much smarter especially when on widescreen displays
     :diminish projectile-mode
     :ensure t
     :config
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
     (setq projectile-completion-system 'ivy
           projectile-create-missing-test-files t
           projectile-switch-project-action #'projectile-commander)
