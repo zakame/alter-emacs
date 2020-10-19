@@ -425,14 +425,12 @@ Make window splits much smarter especially when on widescreen displays
       (jump-to-register :magit-fullscreen)))
 #+END_SRC
 
-** magithub
+** forge
 
 #+BEGIN_SRC emacs-lisp
-  (use-package magithub
+  (use-package forge
     :after magit
-    :if (executable-find "hub")
-    :ensure t
-    :config (magithub-feature-autoinject t))
+    :ensure t)
 #+END_SRC
 
 ** git-timemachine
