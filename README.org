@@ -24,7 +24,7 @@ can do this instead:
 
 #+BEGIN_SRC emacs-lisp
   ;; Enable mouse wheel support
-  (if (fboundp 'mwheel-install) (mwheel-install))
+  (if (fboundp #'mwheel-install) (mwheel-install))
 
   ;; Disable menu, tool, and scroll bars
   (mapc (lambda (mode)
@@ -45,7 +45,7 @@ can do this instead:
   (setq inhibit-startup-message t)        ; No splash screen (well...)
 
   ;; no fringes too, please!
-  (if (fboundp 'fringe-mode) (fringe-mode 0))
+  (if (fboundp #'fringe-mode) (fringe-mode 0))
 
   ;; Use spaces, never tabs, on indentation
   (setq-default indent-tabs-mode nil)
@@ -65,7 +65,7 @@ can do this instead:
 ** use-package
 
 #+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
+  (unless (package-installed-p #'use-package)
     (progn
       (package-refresh-contents)
       (package-install 'use-package)))
@@ -74,7 +74,7 @@ can do this instead:
       '(setq ad-redefinition-action 'accept))
     (require 'use-package))
   (require 'bind-key)
-  (bind-key "C-x c @" 'package-list-packages)
+  (bind-key "C-x c @" #'package-list-packages)
 #+END_SRC
 
 ** diminish
@@ -170,7 +170,7 @@ can do this instead:
     :config
     (setq company-tooltip-align-annotations t
           company-idle-delay 0.3)
-    (add-hook 'after-init-hook 'global-company-mode))
+    (add-hook 'after-init-hook #'global-company-mode))
 #+END_SRC
 
 ** quick help popups for completions
@@ -193,7 +193,7 @@ can do this instead:
         vc-make-backup-files t)
 
   ;; Turn on auto-fill on all major modes
-  (add-hook 'text-mode-hook 'turn-on-auto-fill)
+  (add-hook 'text-mode-hook #'turn-on-auto-fill)
 
   (setq-default fill-column 72)           ; Set default fill-column
   (transient-mark-mode 1)                 ; Show highlight when selecting
@@ -292,7 +292,7 @@ can do this instead:
 #+BEGIN_SRC emacs-lisp
   (use-package hippie-exp
     :config
-    (global-set-key (kbd "M-/") 'hippie-expand)
+    (global-set-key (kbd "M-/") #'hippie-expand)
     (setq hippie-expand-try-functions-list
           '(
             try-expand-dabbrev
@@ -456,7 +456,7 @@ Make window splits much smarter especially when on widescreen displays
     (unless (version<= emacs-version "24.4")
       (diff-hl-flydiff-mode))
     (eval-after-load "magit"
-      '(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
+      '(add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh)))
 #+END_SRC
 
 * Project manglement
@@ -469,7 +469,7 @@ Make window splits much smarter especially when on widescreen displays
     :diminish ggtags-mode
     :if (executable-find "gtags")
     :init
-    (add-hook 'cperl-mode-hook 'ggtags-mode)
+    (add-hook 'cperl-mode-hook #'ggtags-mode)
     (add-hook 'c-mode-common-hook
               (lambda ()
                 (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
@@ -574,7 +574,7 @@ Make window splits much smarter especially when on widescreen displays
   (use-package cperl-mode
     :mode "\\.\\([pP]\\([Llm]\\|erl\\|od\\|sgi\\)\\|al\\|t\\)\\'"
     :preface
-    (defalias 'perl-mode 'cperl-mode)
+    (defalias #'perl-mode #'cperl-mode)
     :config
     (cperl-lazy-install)
     (setq cperl-invalid-face nil
@@ -641,7 +641,7 @@ buffers.
                    "Kill reply buffer upon exiting."
                    (apply orig-fun args)
                    (set-process-sentinel
-                    (get-process "reply") 'zakame/reply-sentinel)))
+                    (get-process "reply") #'zakame/reply-sentinel)))
     (defun zakame/reply-other-window ()
       "Run `reply' on other window."
       (interactive)
@@ -705,9 +705,9 @@ PlSense pulls in auto-complete-mode, so customize that:
                 (lambda (&optional new-buffer-name)
                    "Use $SHELL from environment for `ansi-term'."
                    (interactive (list (getenv "SHELL")))))
-    (add-hook 'term-mode-hook 'goto-address-mode)
+    (add-hook 'term-mode-hook #'goto-address-mode)
     (add-hook 'term-exec-hook
-              '(lambda ()
+              (lambda ()
                  (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))))
 #+END_SRC
 
@@ -727,9 +727,9 @@ PlSense pulls in auto-complete-mode, so customize that:
        (format "*eshell[%s]$ %s*" default-directory
                (eshell-previous-input-string 0)) t))
     (add-hook 'eshell-pre-command-hook
-              'zakame/eshell-rename-buffer-before-command)
+              #'zakame/eshell-rename-buffer-before-command)
     (add-hook 'eshell-post-command-hook
-              'zakame/eshell-rename-buffer-after-command)
+              #'zakame/eshell-rename-buffer-after-command)
     (use-package em-smart)
     (setq eshell-where-to-jump 'begin
           eshell-review-quick-commands nil
@@ -758,10 +758,10 @@ PlSense pulls in auto-complete-mode, so customize that:
                 (org-bullets-mode 1)))
     (setq org-ellipsis " ▼")
     ;; make windmove work well with org-mode
-    (add-hook 'org-shiftup-final-hook 'windmove-up)
-    (add-hook 'org-shiftleft-final-hook 'windmove-left)
-    (add-hook 'org-shiftdown-final-hook 'windmove-down)
-    (add-hook 'org-shiftright-final-hook 'windmove-right))
+    (add-hook 'org-shiftup-final-hook #'windmove-up)
+    (add-hook 'org-shiftleft-final-hook #'windmove-left)
+    (add-hook 'org-shiftdown-final-hook #'windmove-down)
+    (add-hook 'org-shiftright-final-hook #'windmove-right))
 #+END_SRC
 
 ** ob-http
