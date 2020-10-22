@@ -414,10 +414,12 @@ Make window splits much smarter especially when on widescreen displays
            :map magit-status-mode-map
            ("q" . zakame/magit-quit-session))
     :init
-    (defadvice magit-status (around magit-fullscreen activate)
-      (window-configuration-to-register :magit-fullscreen)
-      ad-do-it
-      (delete-other-windows))
+    (advice-add 'magit-status :around
+                (lambda (orig-fun &rest args)
+                   "Active `magit-status' in fullscreen."
+                   (window-configuration-to-register :magit-fullscreen)
+                   (apply orig-fun args)
+                   (delete-other-windows)))
     (defun zakame/magit-quit-session ()
       "Restores the previous window configuration and kills the magit buffer."
       (interactive)
@@ -627,16 +629,19 @@ buffers.
 #+BEGIN_SRC emacs-lisp
   (use-package reply
     :quelpa (reply :fetcher github :repo "syohex/emacs-reply" )
+    :if (executable-find "reply")
     :after cperl-mode
     :config
     (defun zakame/reply-sentinel (process event)
       (if (memq (process-status process) '(signal exit))
           (let ((buffer (process-buffer process)))
             (kill-buffer buffer))))
-    (defadvice run-reply (around reply-set-process-sentinel activate)
-      ad-do-it
-      (set-process-sentinel (get-process "reply") 'zakame/reply-sentinel))
-    (ad-activate 'run-reply)
+    (advice-add 'run-reply :around
+                (lambda (orig-fun &rest args)
+                   "Kill reply buffer upon exiting."
+                   (apply orig-fun args)
+                   (set-process-sentinel
+                    (get-process "reply") 'zakame/reply-sentinel)))
     (defun zakame/reply-other-window ()
       "Run `reply' on other window."
       (interactive)
@@ -687,16 +692,19 @@ PlSense pulls in auto-complete-mode, so customize that:
   (use-package term
     :bind (("C-c t" . ansi-term))
     :config
-    (defadvice term-sentinel (around ansi-term-kill-buffer (proc msg))
-      (if (memq (process-status proc) '(signal exit))
-          (let ((buffer (process-buffer proc)))
-            ad-do-it
-            (kill-buffer buffer))
-        ad-do-it))
-    (ad-activate 'term-sentinel)
-    (defadvice ansi-term (before ansi-term-force-shell)
-      (interactive (list (getenv "SHELL"))))
-    (ad-activate 'ansi-term)
+    (advice-add 'term-sentinel :around
+                (lambda (orig-fun &rest args)
+                   "Kill `ansi-term' buffer upon exit."
+                   (let ((proc (car args)))
+                     (if (memq (process-status proc) '(signal exit))
+                         (let ((buffer (process-buffer proc)))
+                           (apply orig-fun args)
+                           (kill-buffer buffer))
+                       (apply orig-fun args)))))
+    (advice-add 'ansi-term :before
+                (lambda (&optional new-buffer-name)
+                   "Use $SHELL from environment for `ansi-term'."
+                   (interactive (list (getenv "SHELL")))))
     (add-hook 'term-mode-hook 'goto-address-mode)
     (add-hook 'term-exec-hook
               '(lambda ()
