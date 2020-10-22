@@ -751,11 +751,27 @@ PlSense pulls in auto-complete-mode, so customize that:
            ("\C-cc" . org-capture)
            ("\C-ca" . org-agenda)
            ("\C-cb" . org-iswitchb))
+    :config
+    (advice-add 'org-insert-structure-template :around
+                (lambda (orig-fun &rest args)
+                  "Upcase 'begin' and 'end' tags for structure templates."
+                  (let ((orig-point (point)))
+                    (apply orig-fun args)
+                    (goto-char orig-point)
+                    (while (not (looking-at "^$"))
+                      (beginning-of-line)
+                      (cond
+                       ((looking-at "^[ \t]*#\\+\\(begin\\|end\\)_.*$")
+                        (upcase-dwim 2)))
+                      (forward-line))
+                    (goto-char orig-point))
+                  (end-of-line)))
     :init
     ;; enable org-bullets
     (add-hook 'org-mode-hook
               (lambda ()
-                (org-bullets-mode 1)))
+                (org-bullets-mode 1)
+                (electric-indent-local-mode -1)))
     (setq org-ellipsis " ▼")
     ;; make windmove work well with org-mode
     (add-hook 'org-shiftup-final-hook #'windmove-up)
