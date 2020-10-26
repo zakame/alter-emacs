@@ -806,6 +806,16 @@ This allows using =curl= inside Org Babel code blocks, e.g.
      'org-babel-load-languages org-babel-load-languages))
 #+END_SRC
 
+* Nix
+
+** nix-mode
+
+#+BEGIN_SRC emacs-lisp
+  (use-package nix-mode
+    :mode "\\.nix\\'"
+    :ensure t)
+#+END_SRC
+
 * Look and feel
 
 ** tomorrow-80's theme
