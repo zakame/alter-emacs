@@ -734,9 +734,7 @@ PlSense pulls in auto-complete-mode, so customize that:
     (setq eshell-where-to-jump 'begin
           eshell-review-quick-commands nil
           eshell-smart-space-goes-to-end t)
-    (add-hook 'eshell-mode-hook
-              (lambda ()
-                (eshell-smart-initialize))))
+    (add-hook 'eshell-mode-hook #'eshell-smart-initialize))
 #+END_SRC
 
 * OrgMode
