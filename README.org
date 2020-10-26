@@ -125,6 +125,7 @@ can do this instead:
            ("C-x C-f" . counsel-find-file)
            ("C-h f" . counsel-describe-function)
            ("C-h v" . counsel-describe-variable)
+           ("C-h a" . counsel-apropos)
            ("C-h b" . counsel-descbinds)
            ("C-c f" . counsel-recentf)
            ("C-c i" . counsel-imenu)
